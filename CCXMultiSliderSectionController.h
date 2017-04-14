@@ -32,6 +32,7 @@
 - (void)updateValue;
 - (void)createValueUpdater;
 - (void)configureSlider;
+- (void)reloadSliderSettings;
 
 + (NSString *)sectionIdentifier;
 + (NSString *)sectionName;

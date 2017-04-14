@@ -10,6 +10,7 @@
 - (CGFloat)maximumValue;
 - (CGFloat)minimumValue;
 - (BOOL)usesCacheKey;
+- (Class<CCXSliderControllerDelegate>)class;
 
 + (NSString *)sliderIdentifier;
 + (UIImage *)sliderImage;

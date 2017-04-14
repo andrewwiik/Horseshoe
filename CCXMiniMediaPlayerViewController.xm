@@ -154,7 +154,14 @@
 	self.forceTouchGestureRecognizer = [[NSClassFromString(@"SBUIForceTouchGestureRecognizer") alloc] initWithTarget:self action:nil];
 	self.forceTouchGestureRecognizer.delegate = self;
 	self.forceTouchGestureRecognizer.cancelsTouchesInView = YES;
-	[self.view addGestureRecognizer:self.forceTouchGestureRecognizer];
+
+	if (self.view.acapellaCloneView) {
+		[self.view.acapellaCloneView addGestureRecognizer:self.forceTouchGestureRecognizer];
+	} else {
+		[self.view addGestureRecognizer:self.forceTouchGestureRecognizer];
+	}
+
+
 
 	//self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
 

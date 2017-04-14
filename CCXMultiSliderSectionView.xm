@@ -19,6 +19,11 @@
 
  - (void)setHidden:(BOOL)isHidden {
 	%orig;
+	if (isHidden) {
+		[(CCXMultiSliderSectionController *)[self valueForKey:@"_viewDelegate"] controlCenterDidDismiss];
+	} else {
+		[(CCXMultiSliderSectionController *)[self valueForKey:@"_viewDelegate"] controlCenterWillPresent];
+	}
 	//[((CCXMultiSliderSectionController *)[self valueForKey:@"_viewDelegate"]).volumeHUDController setVolumeHUDEnabled:isHidden ? YES : NO forCategory:@"Audio/Video"];
 }
 %end

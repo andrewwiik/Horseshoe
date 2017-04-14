@@ -45,6 +45,12 @@
 				settings = [NSDictionary dictionaryWithContentsOfFile:self.settingsFile];
 			}
 		}
+
+		[[NSNotificationCenter defaultCenter] addObserver:self
+	                                             selector:@selector(reloadSliderSettings)
+	                                             	 name:self.notificationName
+	                                           	   object:nil];
+
 		NSArray *originalEnabled = [settings objectForKey:self.enabledKey];
 		NSArray *originalDisabled = [settings objectForKey:self.disabledKey];
 
@@ -181,6 +187,18 @@
 				}
 			} else {
 				self.toggleButton.forcedGlyphImage = [currentSlider minimumValueImage];
+			}
+
+			for (id<CCXSliderControllerDelegate> slider in self.sliders) {
+				if ([[[slider class] sliderIdentifier] isEqualToString:self.currentSliderIdentifier]) {
+					if ([slider respondsToSelector:@selector(sliderWillAppear:)]) {
+						[slider sliderWillAppear:YES];
+					}
+				} else {
+					if ([slider respondsToSelector:@selector(sliderDidDisappear:)]) {
+						[slider sliderDidDisappear:YES];
+					}
+				}
 			}
 
 			[self.slider _setValue:[currentSlider currentValue] andSendAction:NO];
@@ -435,12 +453,31 @@
 		[self.valueUpdateTimer invalidate];
 		self.valueUpdateTimer = nil;
 	}
+
+	for (id<CCXSliderControllerDelegate> slider in self.sliders) {
+		if ([slider respondsToSelector:@selector(sliderDidDisappear:)]) {
+			[slider sliderDidDisappear:YES];
+		}
+	}
 	//[self.volumeHUDController setVolumeHUDEnabled:YES forCategory:@"Audio/Video"];
 }
 
 - (void)controlCenterWillPresent {
 	%orig;
-	[self createValueUpdater];
+	if (self.currentSliderIdentifier) {
+		for (id<CCXSliderControllerDelegate> slider in self.sliders) {
+			if ([[[slider class] sliderIdentifier] isEqualToString:self.currentSliderIdentifier]) {
+				if ([slider respondsToSelector:@selector(sliderWillAppear:)]) {
+					[slider sliderWillAppear:YES];
+				}
+			} else {
+				if ([slider respondsToSelector:@selector(sliderDidDisappear:)]) {
+					[slider sliderDidDisappear:YES];
+				}
+			}
+		}
+		[self createValueUpdater];
+	}
 }
 
 %new
@@ -463,6 +500,118 @@
 		[self.slider _setValue:[(id<CCXSliderControllerDelegate>)self.currentSliderController currentValue] andSendAction:NO];
 	}
 }
+
+%new
+- (void)reloadSliderSettings {
+
+	if (self.valueUpdateTimer) {
+		[self.valueUpdateTimer invalidate];
+		self.valueUpdateTimer = nil;
+	}
+
+	self.disabledIdentifiers = [NSMutableArray new];
+	self.enabledIdentifiers = [NSMutableArray new];
+	
+	NSDictionary *settings = nil;
+
+	if (self.settingsFile) {
+			if (self.preferencesApplicationID) {
+				CFPreferencesAppSynchronize((__bridge CFStringRef)self.preferencesApplicationID);
+				CFArrayRef keyList = CFPreferencesCopyKeyList((__bridge CFStringRef)self.preferencesApplicationID, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost);
+				if (keyList) {
+					settings = (NSDictionary *)CFBridgingRelease(CFPreferencesCopyMultiple(keyList, (__bridge CFStringRef)self.preferencesApplicationID, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost));
+				}
+			} else {
+				settings = [NSDictionary dictionaryWithContentsOfFile:self.settingsFile];
+			}
+		}
+
+		NSArray *originalEnabled = [settings objectForKey:self.enabledKey];
+		NSArray *originalDisabled = [settings objectForKey:self.disabledKey];
+
+		if (!originalEnabled || [originalEnabled count] == 0) {
+			NSMutableArray *originalEnabledDefaults = [NSMutableArray new];
+				[originalEnabledDefaults addObject:@"com.atwiiks.controlcenterx.slider.volume"];
+				[originalEnabledDefaults addObject:@"com.atwiiks.controlcenterx.slider.brightness"];
+			//originalEnabled = [originalEnabledDefaults copy];
+			//self.enabledIdentifiers = originalEnabledDefaults;
+			originalEnabled = [originalEnabledDefaults copy];
+		}else {
+			// self.enabledIdentifiers = [originalEnabled mutableCopy];
+		}
+
+
+		if (!self.disabledIdentifiers) {
+			self.disabledIdentifiers = [NSMutableArray new];
+		}
+		if (!self.enabledIdentifiers) {
+			self.enabledIdentifiers = [NSMutableArray new];
+		}
+
+		self.allSwitches = [(CCXSlidersPanel *)[NSClassFromString(@"CCXSlidersPanel") sharedInstance] sortedSliderIdentifiers];
+		NSMutableArray *allIdentifiers = [self.allSwitches mutableCopy];
+		for  (NSString *identifier in originalEnabled) {
+			if ([allIdentifiers containsObject:identifier]) {
+				[allIdentifiers removeObject:identifier];
+				[self.disabledIdentifiers removeObject:identifier];
+				[self.enabledIdentifiers addObject:identifier];
+			} else {
+				[self.enabledIdentifiers removeObject:identifier];
+			}
+		}
+		for (NSString *identifier in originalDisabled) {
+			if ([allIdentifiers containsObject:identifier]) {
+				[allIdentifiers removeObject:identifier];
+				[self.disabledIdentifiers addObject:identifier];
+			} else {
+				[self.disabledIdentifiers removeObject:identifier];
+			}
+		}
+
+		if (!self.sliders) {
+			self.sliders = [NSMutableArray new];
+		}
+
+		if (!self.identifiersToSliders) {
+			self.identifiersToSliders = [NSMutableDictionary new];
+		}
+
+		NSMutableArray *newSlidersArray = [NSMutableArray new];
+		NSMutableDictionary *newSlidersDictionary = [NSMutableDictionary new];
+
+		CCXSlidersPanel *panel = (CCXSlidersPanel *)[NSClassFromString(@"CCXSlidersPanel") sharedInstance];
+
+		BOOL stillHasCurrentSlider = NO;
+		if (self.currentSliderIdentifier) {
+			stillHasCurrentSlider = [self.enabledIdentifiers containsObject:self.currentSliderIdentifier];
+		}
+		for (NSString *identifier in self.enabledIdentifiers) {
+			CCXSliderObject *data = [panel sliderObjectForIdentifier:identifier];
+			if (data.controllerClass) {
+				if (![self.identifiersToSliders objectForKey:identifier]) {
+					[newSlidersDictionary setObject:[[data.controllerClass alloc] init] forKey:identifier];
+				} else {
+					[newSlidersDictionary setObject:[self.identifiersToSliders objectForKey:identifier] forKey:identifier];
+				}
+
+				[newSlidersArray addObject:[newSlidersDictionary objectForKey:identifier]];
+			}
+		}
+
+		self.sliders = newSlidersArray;
+		self.identifiersToSliders = newSlidersDictionary;
+
+
+		if (!stillHasCurrentSlider) {
+			if ([self.enabledIdentifiers count] > 0) {
+				self.currentSliderIdentifier = [self.enabledIdentifiers objectAtIndex:0];
+			}
+		}
+
+		[self configureSlider];
+		[self createValueUpdater];
+}
+
 %end
 
 // 0x8cd675a844024379
