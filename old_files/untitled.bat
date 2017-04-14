@@ -1,0 +1,1 @@
+alias package-p='cd; cd ~/private-atwiiks/repo/; rm -f Packages.bz2; rm -f Packages; dpkg-scanpackages debs_subscriber > Packages; bzip2 --compress Packages; dpkg-scanpackages debs_subscriber > Packages'

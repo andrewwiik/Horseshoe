@@ -1,0 +1,11 @@
+_/
+Packages/
+packages/
+theos/
+.theos
+*.deb
+obj/
+.DS-Store
+packages
+Packages
+PPackages
