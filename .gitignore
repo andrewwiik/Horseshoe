@@ -5,7 +5,7 @@ theos/
 .theos
 *.deb
 obj/
-.DS-Store
+*.DS-Store
 packages
 Packages
 PPackages
