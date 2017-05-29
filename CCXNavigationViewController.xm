@@ -84,6 +84,20 @@
 }
 
 %new
+- (BOOL)customHeightRequested {
+	if ([self.mainViewController respondsToSelector:@selector(customHeightRequested)]) {
+		return [(CCXNavigationViewController *)self.mainViewController customHeightRequested];
+	} else return NO;
+}
+
+%new
+- (CGFloat)customPageHeight {
+	if ([self.mainViewController respondsToSelector:@selector(customPageHeight)]) {
+		return [(CCXNavigationViewController *)self.mainViewController customPageHeight];
+	} else return 0.0;
+}
+
+%new
 -(void)navigationController:(id)controller willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
 	self.delegate.view.layer.cornerRadius = 13;
    	self.delegate.view.clipsToBounds = YES;

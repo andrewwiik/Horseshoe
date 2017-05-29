@@ -34,4 +34,6 @@
 - (void)_rerenderPunchThroughMaskIfNecessary;
 - (UIImageView *)copyOfImageView:(UIImageView *)view;
 + (UIImage *)imageFromColor:(UIColor *)color andSize:(CGRect)imgBounds;
+- (BOOL)customHeightRequested;
+- (CGFloat)customPageHeight;
 @end

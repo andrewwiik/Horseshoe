@@ -88,12 +88,12 @@
 
 %new
 - (UIImage *)maximumValueImage {
-	return [UIImage imageNamed:@"HorseshoeAudioBalanceRightSource" inBundle:[NSBundle bundleWithPath:@"/var/mobile/Library/Application Support/Horseshoe.bundle/"]];
+	return [UIImage imageNamed:@"HorseshoeAudioBalanceRightSource" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/Horseshoe.bundle/"]];
 }
 
 %new
 - (UIImage *)minimumValueImage {
-	return [[UIImage imageNamed:@"HorseshoeAudioBalanceLeftSource" inBundle:[NSBundle bundleWithPath:@"/var/mobile/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	return [[UIImage imageNamed:@"HorseshoeAudioBalanceLeftSource" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 %new
@@ -130,6 +130,6 @@
 
 %new
 + (UIImage *)sliderImage {
-	return [[UIImage imageNamed:@"AudioBalance_Slider" inBundle:[NSBundle bundleWithPath:@"/var/mobile/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	return [[UIImage imageNamed:@"AudioBalance_Slider" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 %end

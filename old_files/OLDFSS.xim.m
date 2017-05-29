@@ -285,31 +285,31 @@
 	// 	    	//cell.textLabel.text = @"Airplane Mode";
 	// 	    	//cell.imageView.image = [UIImage imageNamed:@"AirplaneMode" inBundle:[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/Preferences.framework/"]];
 	// 	    	cell.textLabel.text = @"Toggles";
-	// 	    	cell.imageView.image = [[UIImage imageNamed:@"Settings_Section" inBundle:[NSBundle bundleWithPath:@"/var/mobile/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	// 	    	cell.imageView.image = [[UIImage imageNamed:@"Settings_Section" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	// 			cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	// 		} else if (indexPath.row == 1) {
 	// 			// cell.textLabel.text = @"Wi-Fi";
 	// 			cell.textLabel.text = @"Music";
-	// 			cell.imageView.image = [[UIImage imageNamed:@"Music_Section" inBundle:[NSBundle bundleWithPath:@"/var/mobile/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	// 			cell.imageView.image = [[UIImage imageNamed:@"Music_Section" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	// 			cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	// 			//cell.imageView.image = [UIImage imageNamed:@"WiFi" inBundle:[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/Preferences.framework/"]];
 	// 		} else if (indexPath.row == 2) {
 	// 			// cell.textLabel.text = @"Bluetooth";
 	// 			cell.textLabel.text = @"Multi-Slider";
-	// 			cell.imageView.image = [[UIImage imageNamed:@"Sliders_Section" inBundle:[NSBundle bundleWithPath:@"/var/mobile/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	// 			cell.imageView.image = [[UIImage imageNamed:@"Sliders_Section" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	// 			cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	// 			//cell.imageView.image = [UIImage imageNamed:@"Bluetooth" inBundle:[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/Preferences.framework/"]];
 			
 	// 		} else if (indexPath.row == 3) {
 	// 			// cell.textLabel.text = @"Do Not Disturb";
 	// 			cell.textLabel.text = @"Air & Night";
-	// 			cell.imageView.image = [[UIImage imageNamed:@"Button_Section" inBundle:[NSBundle bundleWithPath:@"/var/mobile/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	// 			cell.imageView.image = [[UIImage imageNamed:@"Button_Section" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	// 			cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	// 			//cell.imageView.image = [UIImage imageNamed:@"DND" inBundle:[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/Preferences.framework/"]];
 	// 		} else if (indexPath.row == 4) {
 	// 			// cell.textLabel.text = @"Do Not Disturb";
 	// 			cell.textLabel.text = @"Shortcuts";
-	// 			cell.imageView.image = [[UIImage imageNamed:@"Shortcuts_Section" inBundle:[NSBundle bundleWithPath:@"/var/mobile/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	// 			cell.imageView.image = [[UIImage imageNamed:@"Shortcuts_Section" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	// 			cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	// 			//cell.imageView.image = [UIImage imageNamed:@"DND" inBundle:[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/Preferences.framework/"]];
 	// 		} else {

@@ -10,11 +10,16 @@ THEOS_DEVICE_PORT=22
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = Horseshoe
-Horseshoe_FILES =  $(wildcard *.xm)
+Horseshoe_FILES =  Tweak.xm
+Horseshoe_FILES += $(wildcard *.xm)
 Horseshoe_FILES += $(wildcard ICGTransitionAnimation/AnimationControllers/*.m)
 Horseshoe_FILES += $(wildcard ICGTransitionAnimation/*.m)
 Horseshoe_FILES += CCXSliderObject.m CCXSlidersPanel.m
 Horseshoe_FILES += CCXSectionObject.m CCXSectionsPanel.m CCXSettingsTableViewCell.m CCXNonTransparentView.m CCXSharedResources.m
+
+AVFlashlight_NO_ARC.xm_CFLAGS = -fno-objc-arc
+
+
 Horseshoe_FRAMEWORKS = CoreGraphics QuartzCore UIKit CoreImage
 # Horseshoe_PRIVATE_FRAMEWORKS = MediaRemote
 

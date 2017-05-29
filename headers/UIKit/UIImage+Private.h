@@ -6,4 +6,5 @@
 + (UIImage *)_applicationIconImageForBundleIdentifier:(NSString *)arg1 format:(int)arg2 ;
 + (UIImage *)_applicationIconImageForBundleIdentifier:(NSString *)arg1 format:(NSInteger)arg2 scale:(CGFloat)arg3 ;
 - (UIImage *)ccuiAlphaOnlyImageForMaskImage;
+- (UIImage *)_flatImageWithColor:(UIColor *)color;
 @end

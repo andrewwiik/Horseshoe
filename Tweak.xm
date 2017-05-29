@@ -177,6 +177,7 @@ void disableFakeIdiom() {
 	//[self _addContentViewController:extraPageController];
 	//[self _addContentViewController:settingsPageController];
 	[self _addContentViewController:mainController];
+	[self setValue:mainController.mainViewController forKey:@"_systemControlsPage"];
 	[self _addContentViewController:homePageController];
 	//[self setValue:extraPageController forKey:@"_systemControlsPage"];
 	return;
@@ -440,6 +441,8 @@ void disableFakeIdiom() {
 // NCAnimatableBlurringView
 
 %ctor {
-	//dlopen("/Library/MobileSubstrate/DynamicLibraries/Noctis.dylib", RTLD_NOW);
+	dlopen("/Library/MobileSubstrate/DynamicLibraries/Noctis.dylib", RTLD_NOW);
+	dlopen("/Library/MobileSubstrate/DynamicLibraries/Polus.dylib", RTLD_NOW);
+	dlopen("/Library/Flipswitch/libFlipswitchSwitches.dylib", RTLD_NOW);
 	%init;
 }

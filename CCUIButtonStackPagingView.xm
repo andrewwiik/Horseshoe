@@ -20,9 +20,15 @@
 		}
 	}
 	if ([[self delegate] isKindOfClass:NSClassFromString(@"CCUISettingsSectionController")]) {
-		return CGSizeMake(-1, 49);
+		return CGSizeMake(49, -1);
 	} else {
-		return CGSizeMake(-1,60);
+		return CGSizeMake(60,-1);
 	}
 }
 %end
+
+
+%ctor {
+	//dlopen("/Library/MobileSubstrate/DynamicLibraries/Polus.dylib", RTLD_NOW);
+	%init;
+}

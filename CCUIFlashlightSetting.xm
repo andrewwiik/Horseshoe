@@ -19,7 +19,41 @@
 		}
 	}
 
-	%orig;
+	//if (self.shouldControlFlashlight) {
+		%orig;
+	//}
+
+	if ([self valueForKey:@"_flashlight"]) {
+		if (![CCXSharedResources sharedInstance].flashlight) {
+			[CCXSharedResources sharedInstance].flashlight = (AVFlashlight *)[self valueForKey:@"_flashlight"];
+		}
+	}
+}
+
+
+- (void)deactivate {
+	return;
+	if ([self valueForKey:@"_flashlight"] && [CCXSharedResources sharedInstance].flashlight) {
+		if ([self valueForKey:@"_flashlight"] != [CCXSharedResources sharedInstance].flashlight) {
+			[self setValue:[CCXSharedResources sharedInstance].flashlight forKey:@"_flashlight"];
+		}
+	}
+
+	if (![self valueForKey:@"_flashlight"]) {
+		if ([CCXSharedResources sharedInstance].flashlight) {
+			[self setValue:[CCXSharedResources sharedInstance].flashlight forKey:@"_flashlight"];
+		}
+	}
+
+	//if (self.shouldControlFlashlight) {
+		%orig;
+	//}
+
+	if ([self valueForKey:@"_flashlight"]) {
+		if (![CCXSharedResources sharedInstance].flashlight) {
+			[CCXSharedResources sharedInstance].flashlight = (AVFlashlight *)[self valueForKey:@"_flashlight"];
+		}
+	}
 }
 
 - (id)init {
@@ -46,7 +80,22 @@
 		}
 	}
 
-	%orig;
+	if ([self valueForKey:@"_flashlight"] && [CCXSharedResources sharedInstance].flashlight) {
+		if ([self valueForKey:@"_flashlight"] != [CCXSharedResources sharedInstance].flashlight) {
+			[self setValue:[CCXSharedResources sharedInstance].flashlight forKey:@"_flashlight"];
+		}
+	}
+
+
+	//if (self.shouldControlFlashlight) {
+		%orig;
+	//}
+
+	if ([self valueForKey:@"_flashlight"]) {
+		if (![CCXSharedResources sharedInstance].flashlight) {
+			[CCXSharedResources sharedInstance].flashlight = (AVFlashlight *)[self valueForKey:@"_flashlight"];
+		}
+	}
 
 			//AVFlashlight *_flashlight = [self valueForKey:@"_flashlight"];
 			// @try{

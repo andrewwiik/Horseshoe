@@ -12,7 +12,7 @@
 	if (self.layoutStyle == 1) {
 		return UIEdgeInsetsMake(0,1,0,1);
 	} else {
-		return UIEdgeInsetsMake(-5,1,1,1);
+		return UIEdgeInsetsMake(0,1,1,1);
 	}
 }
 

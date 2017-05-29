@@ -8,6 +8,8 @@
 	if (orig) {
 		orig.controller = [(MPUMediaControlsVolumeView *)[NSClassFromString(@"MPUMediaControlsVolumeView") alloc] initWithStyle:4];
 		orig.hudController =  [[NSClassFromString(@"MPUVolumeHUDController") alloc] init];
+		[orig.controller layoutSubviews];
+		//[orig.controller viewWillAppear:YES];
 	}
 	return orig;
 }
@@ -48,12 +50,12 @@
 
 %new
 - (UIImage *)maximumValueImage {
-	if (self.controller) {
-		if ([self.controller valueForKey:@"_slider"]) {
-			return [[(CCUIControlCenterSlider *)[self.controller valueForKey:@"_slider"] maximumValueImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-		}
-	}
-	return [[UIImage imageNamed:@"volume-maximum-value-image" inBundle:[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/MediaPlayerUI.framework/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	// if (self.controller) {
+	// 	if ([self.controller valueForKey:@"_slider"]) {
+	// 		return [[(CCUIControlCenterSlider *)[self.controller valueForKey:@"_slider"] maximumValueImage] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	// 	}
+	// }
+	return [[[UIImage imageNamed:@"volume-maximum-value-image" inBundle:[NSBundle bundleForClass:NSClassFromString(@"MPUMediaControlsVolumeView")]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] _flatImageWithColor:[UIColor whiteColor]];
 }
 
 %new

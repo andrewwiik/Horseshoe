@@ -12,8 +12,9 @@
 @property (nonatomic, retain) CCXSettingsNavigationBar *settingsNavigationBar;
 @property (nonatomic, retain) NSObject *flashlightSetting;
 @property (nonatomic, retain) NSObject *flipswitchFlashlightSetting;
+@property (nonatomic, retain) AVFlashlight *flashlight;
 + (instancetype)sharedInstance;
-- (AVFlashlight *)flashlight;
-- (void)setFlashlight:(AVFlashlight *)flashlight;
+// - (AVFlashlight *)flashlight;
+// - (void)setFlashlight:(AVFlashlight *)flashlight;
 + (id)controlCenterSystemAgent;
 @end

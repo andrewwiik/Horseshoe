@@ -17,7 +17,6 @@
 	return;
 }
 
-%new
 - (void)_updateBackgroundForStateChange {
 	[(UILabel *)[self valueForKey:@"_label"] layer].filters = nil;
 	[(UILabel *)[self valueForKey:@"_alteredStateLabel"] layer].filters = nil;

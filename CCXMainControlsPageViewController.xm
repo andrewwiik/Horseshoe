@@ -25,6 +25,22 @@
 %property (nonatomic, retain) UIImageView *backgroundCutoutView;
 %property (nonatomic, retain) UIImageView *maskingView;
 %property (nonatomic, retain) NSDictionary *settings;
+%property (nonatomic, retain) NSNumber *pageHeight;
+
+
+%new
+- (BOOL)customHeightRequested {
+	NSMutableArray *columnStackViews = [[self valueForKey:@"_columnStackViews"] mutableCopy];
+	if ([columnStackViews count] == 1) {
+		return YES;
+	} else return NO;
+}
+%new
+- (CGFloat)customPageHeight {
+	if (self.pageHeight)
+		return [self.pageHeight floatValue];
+	else return 0;
+}
 
 %new
 - (CGFloat)animationProgressValue {
@@ -167,6 +183,13 @@
 		}
 	}
 
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		if (![self.enabledIdentifiers containsObject:@"com.atwiiks.controlcenterx.mini-media-player"]) {
+			[self.enabledIdentifiers addObject:@"com.atwiiks.controlcenterx.mini-media-player"];
+		}
+	}
+
+
 
 	[self reloadSections];
 	[self _updateColumns];
@@ -206,10 +229,18 @@
 		}
 	}
 
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		if (![self.enabledIdentifiers containsObject:@"com.atwiiks.controlcenterx.mini-media-player"]) {
+			[self.enabledIdentifiers addObject:@"com.atwiiks.controlcenterx.mini-media-player"];
+		}
+	}
+
 	[self _updateAllSectionVisibilityAnimated:NO];
+
 }
 
 -(void)_updateAllSectionVisibilityAnimated:(BOOL)arg1 {
+	[self reloadSections];
 	%orig;
 	[self reloadSections];
 	[self updateCutoutView];
@@ -232,22 +263,30 @@
 
 - (void)_updateStackViewMarginsAndSpacing {
 	%orig;
-	CGFloat totalSectionsHeight = 0;
-	int numberOfSections = 0;
-	NSMutableArray *columnStackViews = [[self valueForKey:@"_columnStackViews"] mutableCopy];
-	if ([columnStackViews count] == 1) {
-		for (UIViewController *viewController in (NSMutableArray *)[self valueForKey:@"_sectionList"]) {
-			if (viewController.view.hidden == NO) {
-				totalSectionsHeight += [viewController.view intrinsicContentSize].height;
-				numberOfSections++;
-			}
-		}
+	// CGFloat totalSectionsHeight = 0;
+	// int numberOfSections = 0;
+	// NSMutableArray *columnStackViews = [[self valueForKey:@"_columnStackViews"] mutableCopy];
+	// if ([columnStackViews count] == 1) {
+	// 	for (UIViewController *viewController in (NSMutableArray *)[self valueForKey:@"_sectionList"]) {
+	// 		if (viewController.view.hidden == NO) {
+	// 			totalSectionsHeight += [viewController.view intrinsicContentSize].height;
+	// 			numberOfSections++;
+	// 		}
+	// 	}
 
-		if (numberOfSections > 1) {
-			CGFloat stackViewHeight = ((UIStackView *)[columnStackViews objectAtIndex:0]).frame.size.height;
-			((UIStackView *)[columnStackViews objectAtIndex:0]).spacing = (stackViewHeight - totalSectionsHeight)/(numberOfSections - 1);
-		}
-	}
+	// 	if (numberOfSections > 1) {
+	// 		CGFloat stackViewHeight = ((UIStackView *)[columnStackViews objectAtIndex:0]).frame.size.height;
+	// 		((UIStackView *)[columnStackViews objectAtIndex:0]).spacing = (stackViewHeight - totalSectionsHeight)/(numberOfSections - 1);
+	// 	}
+	// }
+	// if ([columnStackViews count] == 3 && NSClassFromString(@"PLAppsController")) {
+	// 	UIStackView *horizontalStackView = [self valueForKey:@"_horizontalStackView"];
+	// 	if (horizontalStackView) {
+	// 		horizontalStackView.distribution = UIStackViewDistributionFill;
+	// 		horizontalStackView.spacing = horizontalStackView.spacing;
+	// 	}
+	// } 
+
 }
 
 -(UIEdgeInsets)contentInsets {
@@ -256,9 +295,12 @@
 
 - (void)setLayoutStyle:(NSInteger)style {
 	%orig;
+
+	
 	[self.volumeAndBrightnessController.view setLayoutStyle:style];
 	[self.brightnessController.view setLayoutStyle:style];
 	[self updateCutoutView];
+	[self reloadSections];
 }
 
 - (void)_updateColumns {
@@ -269,7 +311,7 @@
 }
 - (void)_updateSectionViews {
 	%orig;
-
+	[self reloadSections];
 	[self updateCutoutView];
 }
 
@@ -336,7 +378,7 @@
 			}
 		
 			if (shouldSet) {
-				if ([currentSectionIdentifier isEqualToString:@"com.apple.controlcenterx.mini-media-player"]) {
+				if ([currentSectionIdentifier isEqualToString:@"com.atwiiks.controlcenterx.mini-media-player"]) {
 					[(UIStackView *)[columnStackViews objectAtIndex:mediaGroup] addArrangedSubview:viewController.view];
 					if (mediaGroup != spacingGroup) {
 						numberOfSections--;
@@ -391,8 +433,29 @@
 	self.totalVisibleSections = numberOfSections;
 	if (numberOfSections > 1) {
 		CGFloat stackViewHeight = ((UIStackView *)[columnStackViews objectAtIndex:spacingGroup]).frame.size.height;
-		((UIStackView *)[columnStackViews objectAtIndex:spacingGroup]).spacing = (stackViewHeight - totalSectionsHeight)/numberOfSections;
+		for (int b = 0; b < [columnStackViews count]; b++) {
+			if (b != spacingGroup) {
+				((UIStackView *)[columnStackViews objectAtIndex:b]).spacing = 0;
+			} else {
+				stackViewHeight = ((UIStackView *)[columnStackViews objectAtIndex:b]).frame.size.height;
+				if (![self customHeightRequested]) {
+					((UIStackView *)[columnStackViews objectAtIndex:b]).spacing = (stackViewHeight - totalSectionsHeight)/numberOfSections;
+				} else {
+					((UIStackView *)[columnStackViews objectAtIndex:b]).spacing = 27;
+					CGFloat pageHeightValue = totalSectionsHeight + ((numberOfSections - 1)*27) + 48;
+					self.pageHeight = [NSNumber numberWithFloat:pageHeightValue];
+				}
+			}
+		}
 	}
+
+	// if ([columnStackViews count] == 3 && NSClassFromString(@"PLAppsController")) {
+	// 	UIStackView *horizontalStackView = [self valueForKey:@"_horizontalStackView"];
+	// 	if (horizontalStackView) {
+	// 		horizontalStackView.distribution = UIStackViewDistributionFill;
+	// 		horizontalStackView.spacing = horizontalStackView.spacing;
+	// 	}
+	// } 
 }
 
 
@@ -542,6 +605,11 @@
 		[NSClassFromString(@"SBUIIconForceTouchViewController") _dismissAnimated:YES withCompletionHandler:arg1];
 	}
 	%orig;
+}
+
+- (void)viewWillAppear:(BOOL)willAppear {
+	%orig;
+	[self reloadSections];
 }
 
 %new

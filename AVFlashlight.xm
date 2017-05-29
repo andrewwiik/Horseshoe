@@ -2,16 +2,57 @@
 
 %hook AVFlashlight
 
-- (id)init {
+
+// + (AVFlashlight *)alloc {
+// 	if ([CCXSharedResources sharedInstance].flashlight) {
+// 		if ([CCXSharedResources sharedInstance].flashlightSetting) {
+// 			[[CCXSharedResources sharedInstance].flashlightSetting setValue:[CCXSharedResources sharedInstance].flashlight forKey:@"_flashlight"];
+// 		}
+// 		return (AVFlashlight *)[CCXSharedResources sharedInstance].flashlight;
+// 	} else {
+// 		[CCXSharedResources sharedInstance].flashlight = %orig;
+// 		if ([CCXSharedResources sharedInstance].flashlightSetting) {
+// 			[[CCXSharedResources sharedInstance].flashlightSetting setValue:[CCXSharedResources sharedInstance].flashlight forKey:@"_flashlight"];
+// 		}
+// 		return (AVFlashlight *)[CCXSharedResources sharedInstance].flashlight;
+// 	}
+// }
+- (AVFlashlight *)init {
+	//if ()
+	//if ([CCXSharedResources sharedInstance].flashlight) return nil;
+	// if ([CCXSharedResources sharedInstance].flashlight) {
+	// 	if ([CCXSharedResources sharedInstance].flashlightSetting) {
+	// 		[[CCXSharedResources sharedInstance].flashlightSetting setValue:[CCXSharedResources sharedInstance].flashlight forKey:@"_flashlight"];
+	// 	}
+	// 	return (AVFlashlight *)[CCXSharedResources sharedInstance].flashlight;
+	// }
+
 	AVFlashlight *orig = %orig;
+	if ([CCXSharedResources sharedInstance].flashlight) {
+		//if (self = (AVFlashlight *const __unsafe_unretained)[CCXSharedResources sharedInstance].flashlight) return self;
+		[orig setFlashlightLevel:[CCXSharedResources sharedInstance].flashlight.flashlightLevel withError:nil];
+	}
 	[CCXSharedResources sharedInstance].flashlight = orig;
 	if ([CCXSharedResources sharedInstance].flashlightSetting) {
-		[[CCXSharedResources sharedInstance].flashlightSetting setValue:orig forKey:@"_flashlight"];
+		[[CCXSharedResources sharedInstance].flashlightSetting setValue:[CCXSharedResources sharedInstance].flashlight forKey:@"_flashlight"];
 	}
 	return orig;
 }
 
+-(BOOL)setFlashlightLevel:(float)arg1 withError:(id*)arg2 {
+	if ([CCXSharedResources sharedInstance].flashlight) {
+		if (self != [CCXSharedResources sharedInstance].flashlight) {
+			return [[CCXSharedResources sharedInstance].flashlight setFlashlightLevel:arg1 withError:arg2];
+		}
+	}
+
+	return %orig;
+	
+}
+
 - (void)dealloc {
+
+	//if (self == [CCXSharedResources sharedInstance].flashlight) return;
 	NSLog(@"TRYING TO dealloc");
 	@try{
 		if ([CCXSharedResources sharedInstance].flashlightSetting) {

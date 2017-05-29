@@ -27,13 +27,13 @@
 	_settingsNavigationBar = navigationBar;
 }
 
-- (AVFlashlight *)flashlight {
-	return _flashlight;
-}
+// - (AVFlashlight *)flashlight {
+// 	return _flashlight;
+// }
 
-- (void)setFlashlight:(AVFlashlight *)flashlight {
-	_flashlight = flashlight;
-}
+// - (void)setFlashlight:(AVFlashlight *)flashlight {
+// 	_flashlight = flashlight;
+// }
 
 + (id)controlCenterSystemAgent {
 	if ([NSClassFromString(@"SBControlCenterController") sharedInstanceIfExists]) {

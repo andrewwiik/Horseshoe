@@ -1,10 +1,9 @@
 Package: com.atwiiks.horseshoe
 Name: Horseshoe
 Depends: mobilesubstrate
-Version: 1.0.11
+Version: 2.0.0
 Architecture: iphoneos-arm
 Description: A better iOS 10 Control Center!
-Depiction: https://private.atwiiks.com/repo/depiction.php?packageID=com.atwiiks.horseshoe
-Maintainer: Andrew Wiik
-Author: Andrew Wiik
+Maintainer: ATWiiks
+Author: ATWiiks
 Section: Tweaks

@@ -61,7 +61,7 @@
 
 %new
 + (UIImage *)sectionImage {
-	return [[UIImage imageNamed:@"Settings_Section" inBundle:[NSBundle bundleWithPath:@"/var/mobile/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	return [[UIImage imageNamed:@"Settings_Section" inBundle:[NSBundle bundleWithPath:@"/Library/Application Support/Horseshoe.bundle/"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 %new

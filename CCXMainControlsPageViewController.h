@@ -32,9 +32,12 @@
 @property (nonatomic, retain) NSDictionary *settings;
 @property (nonatomic, retain) NSMutableArray *allIdentifiers;
 @property (nonatomic, assign) NSInteger totalVisibleSections;
+@property (nonatomic, retain) NSNumber *pageHeight;
 - (void)loadView;
 - (CGFloat)requestedPageHeightForHeight:(CGFloat)height;
 - (void)_dismissButtonActionPlatterWithCompletion:(id)arg1;
 - (void)updateCutoutView;
 - (void)reloadSections;
+- (BOOL)customHeightRequested;
+- (CGFloat)customPageHeight;
 @end

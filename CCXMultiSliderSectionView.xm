@@ -6,7 +6,7 @@
 	if (self.layoutStyle == 1) {
 		return CGSizeMake(-1, 60);
 	} else {
-		return CGSizeMake(-1, 23);
+		return CGSizeMake(-1, 35);
 	}
 }
 - (UIEdgeInsets)layoutMargins {
